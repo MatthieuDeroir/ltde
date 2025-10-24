@@ -11,14 +11,224 @@ datasource db {
 }
 
 // ============================================================================
-// User Model (v0.1.0 - Initial Setup)
+// User & Auth (v0.2.0 - Complete)
 // ============================================================================
 
+enum UserRole {
+  VISITOR
+  READER
+  EDITOR
+  ADMIN
+}
+
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  username  String   @unique
-  createdAt DateTime @default(now())
+  id            String    @id @default(cuid())
+  username      String    @unique
+  email         String    @unique
+  passwordHash  String
+  role          UserRole  @default(READER)
+
+  // Metadata
+  displayName   String?
+  avatar        String?
+  bio           String?
+
+  // Relations
+  capsules      Capsule[]
+  likes         Like[]
+  comments      Comment[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@map("users")
+}
+
+// ============================================================================
+// Capsules (v0.2.0 - Complete)
+// ============================================================================
+
+enum CapsuleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Capsule {
+  id            String        @id @default(cuid())
+  userId        String
+
+  title         String
+  content       String
+  excerpt       String?
+  coverImage    String?
+
+  status        CapsuleStatus @default(DRAFT)
+  publishedAt   DateTime?
+
+  year          Int?
+  location      String?
+  people        String?
+
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  media         Media[]
+  tags          CapsuleTag[]
+  chapters      Chapter[]
+  likes         Like[]
+  comments      Comment[]
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([publishedAt])
+  @@map("capsules")
+}
+
+// ============================================================================
+// Chapters (v0.2.0 - Complete)
+// ============================================================================
+
+model Chapter {
+  id            String    @id @default(cuid())
+  capsuleId     String
+
+  title         String
+  content       String
+  order         Int
+
+  capsule       Capsule   @relation(fields: [capsuleId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([capsuleId])
+  @@map("chapters")
+}
+
+// ============================================================================
+// Media (v0.2.0 - Complete)
+// ============================================================================
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  AUDIO
+}
+
+model Media {
+  id            String    @id @default(cuid())
+  capsuleId     String
+
+  type          MediaType
+  url           String
+  filename      String
+  mimeType      String
+  size          Int
+
+  caption       String?
+  altText       String?
+  order         Int?
+
+  capsule       Capsule   @relation(fields: [capsuleId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime  @default(now())
+
+  @@index([capsuleId])
+  @@index([type])
+  @@map("media")
+}
+
+// ============================================================================
+// Tags (v0.2.0 - Complete)
+// ============================================================================
+
+model Tag {
+  id            String        @id @default(cuid())
+
+  name          String        @unique
+  slug          String        @unique
+  color         String?
+  description   String?
+
+  capsules      CapsuleTag[]
+
+  createdAt     DateTime      @default(now())
+
+  @@map("tags")
+}
+
+model CapsuleTag {
+  capsuleId     String
+  tagId         String
+
+  capsule       Capsule       @relation(fields: [capsuleId], references: [id], onDelete: Cascade)
+  tag           Tag           @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime      @default(now())
+
+  @@id([capsuleId, tagId])
+  @@map("capsule_tags")
+}
+
+// ============================================================================
+// Social (v0.2.0 - Complete)
+// ============================================================================
+
+model Like {
+  id            String    @id @default(cuid())
+  userId        String
+  capsuleId     String
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  capsule       Capsule   @relation(fields: [capsuleId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime  @default(now())
+
+  @@unique([userId, capsuleId])
+  @@index([capsuleId])
+  @@index([userId])
+  @@map("likes")
+}
+
+model Comment {
+  id            String    @id @default(cuid())
+  userId        String
+  capsuleId     String
+
+  content       String
+  parentId      String?
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  capsule       Capsule   @relation(fields: [capsuleId], references: [id], onDelete: Cascade)
+  parent        Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies       Comment[] @relation("CommentReplies")
+
+  isEdited      Boolean   @default(false)
+  isDeleted     Boolean   @default(false)
+  deletedAt     DateTime?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([capsuleId])
+  @@index([userId])
+  @@index([parentId])
+  @@map("comments")
+}
+
+// ============================================================================
+// Config (v0.2.0 - Complete)
+// ============================================================================
+
+model AppConfig {
+  id            String    @id @default(cuid())
+
+  key           String    @unique
+  value         String
+
+  updatedAt     DateTime  @updatedAt
+
+  @@map("app_config")
 }
