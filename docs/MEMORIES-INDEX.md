@@ -1,7 +1,7 @@
-# Index - Documentation Memories App
+# Index - Documentation Tableaux d'une exposition
 
 **Date**: 2025-10-23
-**Version actuelle**: v0.0.0 (Setup)
+**Version actuelle**: v0.5.0
 **Version cible**: v1.0.0
 
 ---

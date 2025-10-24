@@ -1,8 +1,8 @@
-# Roadmap - Capsules Mémoires (Memories App)
+# Roadmap - Tableaux d'une exposition
 
 **Date de création**: 2025-10-23
-**Dernière mise à jour**: 2025-10-23
-**Version actuelle**: v0.0.0 (Setup)
+**Dernière mise à jour**: 2025-10-24
+**Version actuelle**: v0.5.0 (Design System)
 **Version cible**: v1.0.0 (Production Ready)
 
 ---

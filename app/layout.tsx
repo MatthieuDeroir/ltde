@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Memories - Capsules Mémoires",
+  title: "Tableaux d'une exposition",
   description: "Application pour créer et partager des souvenirs enrichis avec la famille",
 };
 

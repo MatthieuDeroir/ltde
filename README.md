@@ -1,4 +1,4 @@
-# Memories App - Capsules Mémoires
+# Tableaux d'une exposition
 
 Application web pour créer et partager des souvenirs enrichis avec la famille.
 
@@ -9,7 +9,7 @@ Application web pour créer et partager des souvenirs enrichis avec la famille.
 
 ## 🎯 À Propos
 
-**Memories** est une application web conçue pour permettre à Papiak de créer, enregistrer et partager ses souvenirs sous forme de **capsules mémoires enrichies**. Chaque capsule peut contenir :
+**Tableaux d'une exposition** (en référence à l'œuvre de Moussorgski) est une application web conçue pour permettre à Papiak de créer, enregistrer et partager ses souvenirs sous forme de **capsules mémoires enrichies**. Chaque capsule peut contenir :
 - **Texte riche** (formatage, titres, listes, etc.)
 - **Photos et vidéos**
 - **Narration audio** (la voix du Papiak)
@@ -71,14 +71,14 @@ pnpm exec prisma db seed
 pnpm dev
 ```
 
-L'application sera accessible sur **http://localhost:3000**
+L'application sera accessible sur **http://localhost:4000**
 
 ---
 
 ## 📜 Scripts Disponibles
 
 ```bash
-pnpm dev           # Démarrer serveur dev (http://localhost:3000)
+pnpm dev           # Démarrer serveur dev (http://localhost:4000)
 pnpm build         # Build production
 pnpm start         # Démarrer production
 pnpm lint          # Linter (ESLint)
@@ -96,7 +96,7 @@ pnpm type-check    # TypeScript check (sans build)
 ## 📁 Structure Projet
 
 ```
-memories-app/
+tableaux-exposition/
 ├── prisma/              # Database schema, migrations, seed
 ├── app/                 # Next.js App Router (pages, layouts, API routes)
 │   ├── (public)/        # Routes publiques (Feed, Capsule Viewer)
@@ -172,22 +172,22 @@ Voir [documentation complète](./docs/MEMORIES-ROADMAP.md)
 Après avoir exécuté `pnpm exec prisma db seed`, 4 comptes sont créés :
 
 1. **Admin**
-   - Email: `admin@memories.app`
+   - Email: `admin@tableaux.app`
    - Password: `admin123`
    - Rôle: ADMIN
 
 2. **Papiak (Éditeur)**
-   - Email: `grandpere@memories.app`
+   - Email: `grandpere@tableaux.app`
    - Password: `grandpere123`
    - Rôle: EDITOR
 
 3. **Marie (Lectrice)**
-   - Email: `marie@memories.app`
+   - Email: `marie@tableaux.app`
    - Password: `reader123`
    - Rôle: READER
 
 4. **Jean (Lecteur)**
-   - Email: `jean@memories.app`
+   - Email: `jean@tableaux.app`
    - Password: `reader123`
    - Rôle: READER
 

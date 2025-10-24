@@ -13,10 +13,10 @@ async function main() {
 
   // 1. Create users
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@memories.app' },
+    where: { email: 'admin@tableaux.app' },
     update: {},
     create: {
-      email: 'admin@memories.app',
+      email: 'admin@tableaux.app',
       username: 'admin',
       passwordHash: await hashPassword('admin123'),
       role: UserRole.ADMIN,
@@ -25,10 +25,10 @@ async function main() {
   });
 
   const editor = await prisma.user.upsert({
-    where: { email: 'grandpere@memories.app' },
+    where: { email: 'grandpere@tableaux.app' },
     update: {},
     create: {
-      email: 'grandpere@memories.app',
+      email: 'grandpere@tableaux.app',
       username: 'grandpere',
       passwordHash: await hashPassword('grandpere123'),
       role: UserRole.EDITOR,
@@ -37,10 +37,10 @@ async function main() {
   });
 
   const reader1 = await prisma.user.upsert({
-    where: { email: 'marie@memories.app' },
+    where: { email: 'marie@tableaux.app' },
     update: {},
     create: {
-      email: 'marie@memories.app',
+      email: 'marie@tableaux.app',
       username: 'marie',
       passwordHash: await hashPassword('reader123'),
       role: UserRole.READER,
@@ -49,10 +49,10 @@ async function main() {
   });
 
   const reader2 = await prisma.user.upsert({
-    where: { email: 'jean@memories.app' },
+    where: { email: 'jean@tableaux.app' },
     update: {},
     create: {
-      email: 'jean@memories.app',
+      email: 'jean@tableaux.app',
       username: 'jean',
       passwordHash: await hashPassword('reader123'),
       role: UserRole.READER,
