@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { Editor } from '@tiptap/react';
 import { Button } from '@/components/ui/button';
+import { MediaLibraryDialog } from '@/components/media/MediaLibraryDialog';
 import {
   Bold,
   Italic,
@@ -27,8 +28,13 @@ interface EditorToolbarProps {
 
 export function EditorToolbar({ editor, onSave, onPreview, saveStatus = 'saved' }: EditorToolbarProps) {
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showMediaLibrary, setShowMediaLibrary] = useState(false);
 
   if (!editor) return null;
+
+  const handleInsertImage = (media: { url: string }) => {
+    editor.chain().focus().setImage({ src: media.url }).run();
+  };
 
   return (
     <div className="sticky top-0 z-40 border-b bg-white shadow-sm">
@@ -77,12 +83,7 @@ export function EditorToolbar({ editor, onSave, onPreview, saveStatus = 'saved' 
           <Button
             size="lg"
             variant="outline"
-            onClick={() => {
-              const url = window.prompt('URL de l\'image:');
-              if (url) {
-                editor.chain().focus().setImage({ src: url }).run();
-              }
-            }}
+            onClick={() => setShowMediaLibrary(true)}
             title="Insérer une image"
           >
             <ImageIcon className="mr-2 h-5 w-5" />
@@ -165,6 +166,14 @@ export function EditorToolbar({ editor, onSave, onPreview, saveStatus = 'saved' 
           </div>
         )}
       </div>
+
+      {/* Media Library Dialog */}
+      <MediaLibraryDialog
+        open={showMediaLibrary}
+        onClose={() => setShowMediaLibrary(false)}
+        onSelect={handleInsertImage}
+        filter="image"
+      />
     </div>
   );
 }
