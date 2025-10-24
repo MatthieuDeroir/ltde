@@ -54,7 +54,7 @@ describe('tagsService', () => {
 
   describe('getAllTags', () => {
     it('should get all tags', async () => {
-      const tag = await createTag({ name: 'Test Tag' });
+      const tag = await createTag({ name: 'GetAll Test Tag' });
       testTagId = tag.id;
 
       const tags = await getAllTags();
@@ -67,14 +67,14 @@ describe('tagsService', () => {
 
   describe('getTagById', () => {
     it('should get tag by id', async () => {
-      const created = await createTag({ name: 'Test Tag' });
+      const created = await createTag({ name: 'GetById Test Tag' });
       testTagId = created.id;
 
       const tag = await getTagById(created.id);
 
       expect(tag).toBeDefined();
       expect(tag.id).toBe(created.id);
-      expect(tag.name).toBe('Test Tag');
+      expect(tag.name).toBe('GetById Test Tag');
     });
 
     it('should throw error if tag not found', async () => {
